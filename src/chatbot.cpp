@@ -56,16 +56,16 @@ ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
     //2. Copy source data
     _image = new wxBitmap();  
     *_image = *source._image;
-    _currentNode = new GraphNode();
+    _currentNode = new GraphNode(0);
     *_currentNode = *source._currentNode;
-    _rootNode = new GraphNode();
+    _rootNode = new GraphNode(0);
     *_rootNode = *source._rootNode;
     _chatLogic = new ChatLogic();
     *_chatLogic = *source._chatLogic;
 }
 //Task 2: Implement Rule of 5
-ChatBot::ChatBot &operator=(const ChatBot &source) // 3 : copy assignment operator
-{
+ChatBot &ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operator
+{ 
     // already initialized object is assigned a new value from another existing object
     //ref https://knowledge.udacity.com/questions/235666
     std::cout << "ChatBot Copy Assignment Operator" << std::endl;
@@ -104,7 +104,7 @@ ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
     source._chatLogic = nullptr;
 }
 //Task 2: Implement Rule of 5
-ChatBot::ChatBot &operator=(ChatBot &&source) // 5 : move assignment operator
+ChatBot &ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
 {
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
     if (this == &source)
