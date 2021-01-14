@@ -21,7 +21,7 @@ ChatBot::ChatBot()
 ChatBot::ChatBot(std::string filename)
 {
     std::cout << "ChatBot Constructor" << std::endl;
-    
+
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
@@ -35,7 +35,7 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Destructor" << std::endl;
 
     // deallocate heap memory
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
         _image = NULL;
@@ -44,6 +44,88 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+//Task 2: Implement Rule of 5
+ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor 
+{
+    //Good explanation of copy vs move constructor and why it should be like this
+    //https://knowledge.udacity.com/questions/123045
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    //new object is created from an existing object
+    //Implement deep copy
+    //1. Allocate memory
+    //2. Copy source data
+    _image = new wxBitmap();  
+    *_image = *source._image;
+    _currentNode = new GraphNode();
+    *_currentNode = *source._currentNode;
+    _rootNode = new GraphNode();
+    *_rootNode = *source._rootNode;
+    _chatLogic = new ChatLogic();
+    *_chatLogic = *source._chatLogic;
+}
+//Task 2: Implement Rule of 5
+ChatBot::ChatBot &operator=(const ChatBot &source) // 3 : copy assignment operator
+{
+    // already initialized object is assigned a new value from another existing object
+    //ref https://knowledge.udacity.com/questions/235666
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+    //Prevent self assignment
+    if (this == &source)
+        return *this;
+
+    //Shallow copy for not owned data handles
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    //Deep copy for owned data handles
+    if (_image != nullptr)
+        delete _image;
+    _image = new wxBitmap();
+    *_image = *source._image;
+    
+    return *this;
+}
+//Task 2: Implement Rule of 5
+ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;  
+    //Copy pointers and invalidate source handles to take ownership
+    _image = source._image;
+    source._image = nullptr;
+
+    _currentNode = source._currentNode;
+    source._currentNode = nullptr;
+
+    _rootNode = source._rootNode;
+    source._rootNode = nullptr;
+    
+    _chatLogic = source._chatLogic;
+    source._chatLogic = nullptr;
+}
+//Task 2: Implement Rule of 5
+ChatBot::ChatBot &operator=(ChatBot &&source) // 5 : move assignment operator
+{
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
+    if (this == &source)
+        return *this;
+
+    delete _image;
+
+    _image = source._image;
+    source._image = nullptr;
+
+    _currentNode = source._currentNode;
+    source._currentNode = nullptr;
+
+    _rootNode = source._rootNode;
+    source._rootNode = nullptr;
+
+    _chatLogic = source._chatLogic;
+    source._chatLogic = nullptr;
+
+    return *this;
+}
 
 ////
 //// EOF STUDENT CODE
