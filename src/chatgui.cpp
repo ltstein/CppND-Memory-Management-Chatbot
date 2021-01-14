@@ -137,6 +137,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
     //// STUDENT CODE
     ////
     //Task1: Make _chatLogic an exclusive resource
+    // smart pointer handles _chatLogic deletion
 
     ////
     //// EOF STUDENT CODE

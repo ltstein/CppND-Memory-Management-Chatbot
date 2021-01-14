@@ -29,6 +29,7 @@ public:
     // getter / setter
     ChatLogic *GetChatLogicHandle() { return _chatLogic.get(); }
     //Ref to change to .get() to return standard pointer outside of "Student Code" area
+    //https://knowledge.udacity.com/questions/118929https://knowledge.udacity.com/questions/118929
 
     // events
     void paintEvent(wxPaintEvent &evt);
