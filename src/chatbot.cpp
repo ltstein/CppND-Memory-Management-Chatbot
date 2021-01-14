@@ -61,7 +61,8 @@ ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
     _rootNode = new GraphNode(0);
     *_rootNode = *source._rootNode;
     _chatLogic = new ChatLogic();
-    *_chatLogic = *source._chatLogic;
+    //Revise after exclusive ownership implemented for task 3
+    _chatLogic = source._chatLogic;
 }
 //Task 2: Implement Rule of 5
 ChatBot &ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operator
