@@ -54,13 +54,15 @@ ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
     //Implement deep copy
     //1. Allocate memory
     //2. Copy source data
+    //Remove allocation based on changes to use smart pointers
+    //ref https://knowledge.udacity.com/questions/449763
     _image = new wxBitmap();  
     *_image = *source._image;
-    _currentNode = new GraphNode(0);
-    *_currentNode = *source._currentNode;
-    _rootNode = new GraphNode(0);
-    *_rootNode = *source._rootNode;
-    _chatLogic = new ChatLogic();
+    // _currentNode = new GraphNode(0);
+    _currentNode = source._currentNode;
+    // _rootNode = new GraphNode(0);
+    _rootNode = source._rootNode;
+    // _chatLogic = new ChatLogic();
     //Revise after exclusive ownership implemented for task 3
     _chatLogic = source._chatLogic;
 }
@@ -111,7 +113,7 @@ ChatBot &ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
     if (this == &source)
         return *this;
 
-    delete _image;
+    // delete _image;
 
     _image = source._image;
     source._image = nullptr;
@@ -123,7 +125,10 @@ ChatBot &ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
     source._rootNode = nullptr;
 
     _chatLogic = source._chatLogic;
+    //Add assignment based on https://knowledge.udacity.com/questions/339497
+     _chatLogic->SetChatbotHandle(this);
     source._chatLogic = nullptr;
+
 
     return *this;
 }
