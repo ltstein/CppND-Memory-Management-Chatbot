@@ -65,6 +65,7 @@ ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
     // _chatLogic = new ChatLogic();
     //Revise after exclusive ownership implemented for task 3
     _chatLogic = source._chatLogic;
+
 }
 //Task 2: Implement Rule of 5
 ChatBot &ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operator
@@ -79,7 +80,7 @@ ChatBot &ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operat
     //Shallow copy for not owned data handles
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
-    _chatLogic->SetChatbotHandle(this);
+
 
     //Deep copy for owned data handles
     if (_image != nullptr)
@@ -104,6 +105,7 @@ ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
     source._rootNode = nullptr;
     
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     source._chatLogic = nullptr;
 }
 //Task 2: Implement Rule of 5
