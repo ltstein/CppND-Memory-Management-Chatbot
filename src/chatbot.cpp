@@ -126,7 +126,7 @@ ChatBot &ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
 
     _chatLogic = source._chatLogic;
     //Add assignment based on https://knowledge.udacity.com/questions/339497
-     _chatLogic->SetChatbotHandle(this);
+    _chatLogic->SetChatbotHandle(this);
     source._chatLogic = nullptr;
 
 
